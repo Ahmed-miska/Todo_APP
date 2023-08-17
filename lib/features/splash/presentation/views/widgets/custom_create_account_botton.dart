@@ -5,24 +5,29 @@ import 'package:todo/core/ulits/app_router.dart';
 
 import '../../../../../core/ulits/styles.dart';
 
-class CustomLoginButton extends StatelessWidget {
-  const CustomLoginButton({Key? key, required this.text, required this.onPressed}) : super(key: key);
-  final String text;
-  final void Function() onPressed;
+class CreateAccountBotton extends StatelessWidget {
+  const CreateAccountBotton({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(padding: EdgeInsets.zero),
-      onPressed: onPressed,
+      onPressed: () {
+        GoRouter.of(context).push(AppRouter.kRegisterView);
+      },
       child: Container(
         height: 48,
-        decoration: BoxDecoration(
-          color: Color(0xff8875FF),
-          borderRadius: BorderRadius.circular(4),
+        decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+              side: BorderSide(
+                width: 1,
+                color: Color(0xFF8E7CFF),
+              ),
+              borderRadius: BorderRadius.circular(4)),
         ),
         child: Center(
           child: Text(
-            text,
+            'CREATE ACCOUNT',
             style: Styles.textStyle16.copyWith(color: Colors.white),
           ),
         ),

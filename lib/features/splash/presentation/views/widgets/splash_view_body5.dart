@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/core/ulits/styles.dart';
 
+import '../../../../../core/ulits/app_router.dart';
+import 'custom_create_account_botton.dart';
 import 'custom_login_button.dart';
 
 class SplashViewBody5 extends StatelessWidget {
@@ -11,6 +13,7 @@ class SplashViewBody5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
@@ -50,7 +53,12 @@ class SplashViewBody5 extends StatelessWidget {
               ),
             ),
             Spacer(),
-            CustomLoginButton(),
+            CustomLoginButton(
+              text: 'LOGIN',
+              onPressed: () {
+                GoRouter.of(context).push(AppRouter.kLoginView);
+              },
+            ),
             SizedBox(
               height: 24,
             ),
@@ -59,35 +67,6 @@ class SplashViewBody5 extends StatelessWidget {
               height: 67,
             )
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class CreateAccountBotton extends StatelessWidget {
-  const CreateAccountBotton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      style: ButtonStyle(),
-      onPressed: () {},
-      child: Container(
-        height: 48,
-        decoration: ShapeDecoration(
-          shape: RoundedRectangleBorder(
-              side: BorderSide(
-                width: 1,
-                color: Color(0xFF8E7CFF),
-              ),
-              borderRadius: BorderRadius.circular(4)),
-        ),
-        child: Center(
-          child: Text(
-            'CREATE ACCOUNT',
-            style: Styles.textStyle16.copyWith(color: Colors.white),
-          ),
         ),
       ),
     );
