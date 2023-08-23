@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/features/Login/presentation/views/login_view.dart';
+import 'package:todo/features/home/presentation/views/date_view.dart';
+import 'package:todo/features/home/presentation/views/edit_task_view.dart';
 import 'package:todo/features/home/presentation/views/home_view.dart';
 import 'package:todo/features/register/presentation/views/register_view.dart';
 import 'package:todo/features/splash/presentation/views/splash_view.dart';
@@ -19,6 +21,8 @@ abstract class AppRouter {
   static final kLoginView = '/LoginView';
   static final kRegisterView = '/RegisterView';
   static final kHomeView = '/HomeView';
+  static final kEditTaskView = '/EditTaskView';
+  
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -53,6 +57,11 @@ abstract class AppRouter {
         path: kHomeView,
         builder: (context, state) => HomeView(),
       ),
+      GoRoute(
+        path: kEditTaskView,
+        builder: (context, state) => EditTaskView(),
+      ),
+    
     ],
   );
 }

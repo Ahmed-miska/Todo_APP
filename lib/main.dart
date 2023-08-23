@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo/core/ulits/app_router.dart';
-import 'package:todo/features/splash/presentation/views/splash_view.dart';
 
 void main() {
   runApp(const TodoApp());
