@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/core/ulits/styles.dart';
 
@@ -19,7 +20,7 @@ class SplashViewBody5 extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 58,
+              height: 50.h,
             ),
             Row(
               children: [
@@ -32,18 +33,18 @@ class SplashViewBody5 extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 58,
+              height: 58.h,
             ),
             Text(
               'Welcome to UpTodo',
               style: Styles.textStyle32,
             ),
             SizedBox(
-              height: 26,
+              height: 26.h,
             ),
             Container(
-              height: 48,
-              width: 287,
+              height: 48.h,
+              width: 287.w,
               child: Text(
                 'Please login to your account or create new account to continue',
                 style: Styles.textStyle16.copyWith(
@@ -60,11 +61,11 @@ class SplashViewBody5 extends StatelessWidget {
               },
             ),
             SizedBox(
-              height: 24,
+              height: 24.h,
             ),
             CreateAccountBotton(),
             SizedBox(
-              height: 67,
+              height: 67.h,
             )
           ],
         ),

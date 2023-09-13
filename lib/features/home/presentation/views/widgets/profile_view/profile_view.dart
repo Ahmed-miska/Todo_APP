@@ -1,12 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo/core/services/google_login.dart';
 import 'package:todo/core/ulits/app_router.dart';
 import 'package:todo/core/ulits/styles.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({Key? key}) : super(key: key);
 
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  AuthClass googleSign = AuthClass();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -175,17 +182,24 @@ class ProfileView extends StatelessWidget {
                 )
               ],
             ),
-            Row(
-              children: [
-                Icon(Icons.logout_rounded),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Log out',
-                  style: Styles.textStyle16,
-                ),
-              ],
+            GestureDetector(
+              onTap: () async {
+                await googleSign.googleSignout(context);
+                GoRouter.of(context).pop();
+                GoRouter.of(context).push(AppRouter.kLoginView);
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.logout_rounded),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Log out',
+                    style: Styles.textStyle16,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

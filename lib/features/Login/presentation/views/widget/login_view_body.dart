@@ -1,22 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/core/ulits/app_router.dart';
 import 'package:todo/core/ulits/styles.dart';
+import 'package:todo/features/Login/presentation/manger/cubit/login_cubit.dart';
+import 'package:todo/features/Login/presentation/views/widget/custom_username_textfield.dart';
 import 'package:todo/features/splash/presentation/views/widgets/custom_login_button.dart';
-import 'package:todo/features/splash/presentation/views/widgets/splash_view_body5.dart';
 
-import '../../../../splash/presentation/views/widgets/custom_create_account_botton.dart';
+import '../../../../../core/services/google_login.dart';
 import 'custom_login_register_botton.dart';
 import 'custom_password_textfield.dart';
-import 'custom_username_textfield.dart';
 
-class LoginViewBody extends StatelessWidget {
-  const LoginViewBody({Key? key}) : super(key: key);
+class LoginViewBody extends StatefulWidget {
+  LoginViewBody({Key? key}) : super(key: key);
 
   @override
+  State<LoginViewBody> createState() => _LoginViewBodyState();
+}
+
+class _LoginViewBodyState extends State<LoginViewBody> {
+  TextEditingController emailControlar = TextEditingController();
+
+  TextEditingController passControlar = TextEditingController();
+  bool circular = false;
+  AuthClass googleSignin = AuthClass();
+  @override
   Widget build(BuildContext context) {
-    double h = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: SingleChildScrollView(
@@ -25,7 +36,7 @@ class LoginViewBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: h * .04,
+              height: 30.h,
             ),
             IconButton(
               onPressed: () {
@@ -35,14 +46,14 @@ class LoginViewBody extends StatelessWidget {
             ),
             // Spacer(),
             SizedBox(
-              height: h * .03,
+              height: 30.h,
             ),
             Text(
-              'LOGIN',
+              'Login',
               style: Styles.textStyle32,
             ),
             SizedBox(
-              height: h * .05,
+              height: 40.h,
             ),
             Text(
               'Username',
@@ -51,11 +62,13 @@ class LoginViewBody extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: h * .009,
+              height: 10.h,
             ),
-            CustomUserNameTextField(),
+            CustomUserNameTextField(
+              controller: emailControlar,
+            ),
             SizedBox(
-              height: h * .04,
+              height: 30.h,
             ),
             Text(
               'Password',
@@ -65,16 +78,51 @@ class LoginViewBody extends StatelessWidget {
             ),
 
             SizedBox(
-              height: h * .009,
+              height: 10.h,
             ),
-            CustomPasswordTextField(),
+            CustomPasswordTextField(
+              controller: passControlar,
+            ),
             // Spacer(),
             SizedBox(
-              height: h * .06,
+              height: 50.h,
             ),
-            CustomLoginButton(text: 'LOGIN', onPressed: () { GoRouter.of(context).push(AppRouter.kHomeView); },),
+            BlocConsumer<LoginCubit, LoginState>(
+              listener: (context, state) {
+                if (state is LoginSuccess) {
+                  setState(() {
+                    circular = false;
+                  });
+
+                  GoRouter.of(context).push(AppRouter.kHomeView);
+                } else if (state is LoginFailure) {
+                  setState(() {
+                    circular = false;
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.errMessage),
+                    ),
+                  );
+                }
+              },
+              builder: (context, state) {
+                return CustomLoginButton(
+                  circular: circular,
+                  text: 'LOGIN',
+                  onPressed: () async {
+                    setState(() {
+                      circular = true;
+                    });
+                    BlocProvider.of<LoginCubit>(context).login(
+                        emailControlar: emailControlar,
+                        passControlar: passControlar);
+                  },
+                );
+              },
+            ),
             SizedBox(
-              height: h * .04,
+              height: 30.h,
             ),
             Row(
               children: [
@@ -95,21 +143,27 @@ class LoginViewBody extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: h * .04,
+              height: 30.h,
             ),
             CustomLoginWithBotton(
+              onPressed: () async {
+                await googleSignin.googleSignIn(context);
+              },
               imageLink: 'assets/images/google.png',
               text: 'Login with Google',
             ),
             SizedBox(
-              height: h * .04,
+              height: 20.h,
             ),
             CustomLoginWithBotton(
-              imageLink: 'assets/images/apple.png',
-              text: 'Login with Appel',
+              onPressed: () {
+                GoRouter.of(context).push(AppRouter.kPhoneView);
+              },
+              imageLink: 'assets/images/mobile-phones-telephone-call.png',
+              text: 'Login with Mobile',
             ),
             SizedBox(
-              height: h * .06,
+              height: 20.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -120,6 +174,7 @@ class LoginViewBody extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
+                    GoRouter.of(context).pop();
                     GoRouter.of(context).push(AppRouter.kRegisterView);
                   },
                   child: Text(

@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:todo/core/ulits/styles.dart';
+import 'package:todo/features/home/presentation/views/widgets/profile_view/category_items.dart';
 
 class TimeView extends StatefulWidget {
   const TimeView({Key? key}) : super(key: key);
@@ -15,15 +15,20 @@ class _TimeViewState extends State<TimeView> {
   var hour = 0;
   var minute = 0;
   var timeformat = "AM";
+  TimeItem timeItem = TimeItem();
+  DateItem dateItem = DateItem();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+        padding: const EdgeInsets.only(
+          left: 8,
+          right: 8,
+          top: 8,
+        ),
         child: Container(
-          height: 200,
+          height: 200.h,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Choose Time',
@@ -32,12 +37,13 @@ class _TimeViewState extends State<TimeView> {
               Divider(
                 thickness: 2,
               ),
+              Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    height: 90,
-                    width: 70,
+                    height: 60.h,
+                    width: 40.w,
                     decoration: BoxDecoration(
                       color: Color(0xff272727),
                     ),
@@ -47,19 +53,20 @@ class _TimeViewState extends State<TimeView> {
                       value: hour,
                       zeroPad: true,
                       infiniteLoop: true,
-                      itemWidth: 28,
-                      itemHeight: 32,
+                      itemWidth: 25.w,
+                      itemHeight: 20.h,
                       textStyle: TextStyle(
                         color: Colors.white.withOpacity(.1),
-                        fontSize: 16,
+                        fontSize: 10.sp,
                       ),
                       selectedTextStyle: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 14.sp,
                       ),
                       onChanged: (int value) {
                         setState(() {
                           hour = value;
+                          timeItem.hour = value;
                         });
                       },
                       decoration: BoxDecoration(),
@@ -70,8 +77,8 @@ class _TimeViewState extends State<TimeView> {
                     style: TextStyle(fontSize: 20),
                   ),
                   Container(
-                    height: 90,
-                    width: 70,
+                    height: 60.h,
+                    width: 40.w,
                     decoration: BoxDecoration(
                       color: Color(0xff272727),
                     ),
@@ -81,83 +88,86 @@ class _TimeViewState extends State<TimeView> {
                       value: minute,
                       zeroPad: true,
                       infiniteLoop: true,
-                      itemWidth: 28,
-                      itemHeight: 32,
+                      itemWidth: 25.w,
+                      itemHeight: 20.h,
                       textStyle: TextStyle(
                         color: Colors.white.withOpacity(.1),
-                        fontSize: 16,
+                        fontSize: 10.sp,
                       ),
                       selectedTextStyle: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 14.sp,
                       ),
                       onChanged: (int value) {
                         setState(() {
                           minute = value;
+                          timeItem.minute = value;
                         });
                       },
                       decoration: BoxDecoration(),
                     ),
                   ),
                   Container(
-                    height: 90,
-                    width: 70,
+                    height: 60.h,
+                    width: 40.w,
                     decoration: BoxDecoration(
                       color: Color(0xff272727),
                     ),
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                timeformat = "AM";
-                              });
-                            },
-                            child: Text(
-                              'AM',
-                              style: TextStyle(
-                                fontSize: timeformat == "AM" ? 20 : 16,
-                                color: timeformat == "AM"
-                                    ? Colors.white
-                                    : Colors.white.withOpacity(.1),
-                              ),
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              timeformat = "AM";
+                              timeItem.m = "AM";
+                            });
+                          },
+                          child: Text(
+                            'AM',
+                            style: TextStyle(
+                              fontSize: timeformat == "AM" ? 14.sp : 10.sp,
+                              color: timeformat == "AM"
+                                  ? Colors.white
+                                  : Colors.white.withOpacity(.1),
                             ),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                timeformat = "PM";
-                              });
-                            },
-                            child: Text(
-                              'PM',
-                              style: TextStyle(
-                                fontSize: timeformat == "PM" ? 20 : 16,
-                                color: timeformat == "PM"
-                                    ? Colors.white
-                                    : Colors.white.withOpacity(.1),
-                              ),
+                        ),
+                        SizedBox(
+                          height: 8.h,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              timeformat = "PM";
+                              timeItem.m = "PM";
+                            });
+                          },
+                          child: Text(
+                            'PM',
+                            style: TextStyle(
+                              fontSize: timeformat == "PM" ? 14.sp : 10.sp,
+                              color: timeformat == "PM"
+                                  ? Colors.white
+                                  : Colors.white.withOpacity(.1),
                             ),
-                          )
-                        ]),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              Spacer(),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextButton(
                     style: TextButton.styleFrom(
-                      fixedSize:
-                          Size(MediaQuery.of(context).size.width * .3, 48),
+                      fixedSize: Size(107.w, 35.h),
                     ),
                     onPressed: () {
-                      GoRouter.of(context).pop();
+                      Navigator.pop(context, dateItem);
                     },
                     child: Text(
                       'Cancel',
@@ -169,15 +179,13 @@ class _TimeViewState extends State<TimeView> {
                   TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: Color(0xff8687E7),
-                      fixedSize:
-                          Size(MediaQuery.of(context).size.width * .3, 48),
+                      fixedSize: Size(107.w, 35.h),
                     ),
                     onPressed: () async {
-                      print(hour);
-                      print(minute);
-                      print(timeformat);
-
-                      GoRouter.of(context).pop();
+                      // print(timeItem.hour);
+                      // print(timeItem.minute);
+                      // print(timeItem.m);
+                      Navigator.pop(context, timeItem);
                     },
                     child: Text(
                       'Save',

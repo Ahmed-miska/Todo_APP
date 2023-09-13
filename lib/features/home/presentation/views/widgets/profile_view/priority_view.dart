@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/core/ulits/styles.dart';
 
 class PriorityView extends StatefulWidget {
-  const PriorityView({Key? key}) : super(key: key);
+  const PriorityView({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<PriorityView> createState() => _PriorityViewState();
@@ -26,8 +29,15 @@ class _PriorityViewState extends State<PriorityView> {
     Color(0xff272727),
     Color(0xff272727),
     Color(0xff272727),
-    Color(0xff272727),
+    Color(0xff272727)
   ];
+
+  void reColor() {
+    for (var i = 0; i < 12; i++) {
+      colors[i] = Color(0xff272727);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,55 +56,80 @@ class _PriorityViewState extends State<PriorityView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  height: 10,
+                  height: 10.h,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    xX(choosen: 1),
-                    xX(choosen: 2),
-                    xX(choosen: 3),
-                    xX(choosen: 4),
-                  ],
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    xX(choosen: 5),
-                    xX(choosen: 6),
-                    xX(choosen: 7),
-                    xX(choosen: 8),
-                  ],
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 8,
+                    Column(
+                      children: [
+                        xX(choosen: 1),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        xX(choosen: 5),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        xX(choosen: 9),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                      ],
                     ),
-                    xX(choosen: 9),
-                    SizedBox(
-                      width: 8,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        xX(choosen: 2),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        xX(choosen: 6),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        xX(choosen: 10),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                      ],
                     ),
-                    xX(choosen: 10),
+                    Column(
+                      children: [
+                        xX(choosen: 3),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        xX(choosen: 7),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        xX(choosen: 4),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        xX(choosen: 8),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ],
             ),
-            SizedBox(
-              height: 8,
-            ),
+            Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
                   style: TextButton.styleFrom(
-                    fixedSize: Size(MediaQuery.of(context).size.width * .3, 48),
+                    fixedSize: Size(107.w, 35.h),
                   ),
                   onPressed: () {
                     GoRouter.of(context).pop();
@@ -109,11 +144,11 @@ class _PriorityViewState extends State<PriorityView> {
                 TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor: Color(0xff8687E7),
-                    fixedSize: Size(MediaQuery.of(context).size.width * .3, 48),
+                    fixedSize: Size(107.w, 35.h),
                   ),
                   onPressed: () async {
                     print(choosenPriority);
-                    GoRouter.of(context).pop();
+                    Navigator.pop(context, choosenPriority);
                   },
                   child: Text(
                     'Save',
@@ -123,6 +158,9 @@ class _PriorityViewState extends State<PriorityView> {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 5.h,
             ),
           ],
         ),
@@ -134,26 +172,14 @@ class _PriorityViewState extends State<PriorityView> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          colors = [
-            color,
-            color,
-            color,
-            color,
-            color,
-            color,
-            color,
-            color,
-            color,
-            color,
-            color
-          ];
+          reColor();
           colors[choosen] = Color(0xff8687E7);
           choosenPriority = choosen;
         });
       },
       child: Container(
-        height: 64,
-        width: 64,
+        height: 64.h,
+        width: 64.h,
         decoration: BoxDecoration(
           color: colors[choosen],
         ),

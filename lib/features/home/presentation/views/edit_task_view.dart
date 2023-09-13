@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/features/home/presentation/views/widgets/edit_Task_title.dart';
 import 'package:todo/features/home/presentation/views/widgets/profile_view/category_view.dart';
@@ -14,6 +15,7 @@ class EditTaskView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     Future openEditTaskView() => showDialog(
           context: context,
           builder: (context) => AlertDialog(
@@ -30,8 +32,8 @@ class EditTaskView extends StatelessWidget {
           builder: (context) => AlertDialog(
             contentPadding: EdgeInsets.zero,
             content: Container(
-              height: MediaQuery.of(context).size.height * .5,
-              width: MediaQuery.of(context).size.width,
+              height: 340.h,
+              width: 230.w,
               child: DatePicker(),
             ),
           ),
@@ -41,8 +43,8 @@ class EditTaskView extends StatelessWidget {
           builder: (context) => AlertDialog(
             contentPadding: EdgeInsets.zero,
             content: Container(
-              height: MediaQuery.of(context).size.height * .43,
-              width: MediaQuery.of(context).size.width,
+              height: 360.h,
+              width: 250.w,
               child: PriorityView(),
             ),
           ),
@@ -52,26 +54,27 @@ class EditTaskView extends StatelessWidget {
           builder: (context) => AlertDialog(
             contentPadding: EdgeInsets.zero,
             content: Container(
-              height: MediaQuery.of(context).size.height * .6,
-              width: MediaQuery.of(context).size.width,
+              height: 556.h,
+              width: 300.w,
               child: CategoryView(),
             ),
           ),
         );
+
     Future openDeleteView() => showDialog(
           context: context,
           builder: (context) => AlertDialog(
             contentPadding: EdgeInsets.zero,
             content: Container(
-              height: MediaQuery.of(context).size.height * .22,
-              width: MediaQuery.of(context).size.width,
+              height: 200.h,
+              width: 300.w,
               child: DeleteView(),
             ),
           ),
         );
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.sp),
         child: Column(
           children: [
             SizedBox(
@@ -90,30 +93,32 @@ class EditTaskView extends StatelessWidget {
             Column(
               children: [
                 Container(
-                  height: 80,
-                  width: MediaQuery.of(context).size.width * .9,
+                  height: 90.h,
                   child: Row(
                     children: [
+                      SizedBox(
+                        width: 10.h,
+                      ),
                       Icon(
                         Icons.circle_outlined,
-                        size: 20,
+                        size: 16.r,
                       ),
                       SizedBox(
-                        width: 10,
+                        width: 12.h,
                       ),
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'Do Math Homework',
-                                style: Styles.textStyle20,
+                                style: Styles.textStyle16,
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * .17,
+                                width: 100.w,
                               ),
                               IconButton(
                                 onPressed: () async {
@@ -123,16 +128,68 @@ class EditTaskView extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Text(
-                            'Do chapter 2 to 5 for next week',
-                            style:
-                                Styles.textStyle16.copyWith(color: Colors.grey),
-                          )
+                          Container(
+                            width: 280.w,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Today At 16:45',
+                                  style: Styles.textStyle16
+                                      .copyWith(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
+                // Container(
+                //   height: 80,
+                //   width: MediaQuery.of(context).size.width * .9,
+                //   child: Row(
+                //     children: [
+                //       Icon(
+                //         Icons.circle_outlined,
+                //         size: 20,
+                //       ),
+                //       SizedBox(
+                //         width: 10,
+                //       ),
+                //       Column(
+                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Row(
+                //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //             children: [
+                //               Text(
+                //                 'Do Math Homework',
+                //                 style: Styles.textStyle20,
+                //               ),
+                //               SizedBox(
+                //                 width: MediaQuery.of(context).size.width * .17,
+                //               ),
+                //               IconButton(
+                //                 onPressed: () async {
+                //                   await openEditTaskView();
+                //                 },
+                //                 icon: Icon(Icons.edit_note),
+                //               ),
+                //             ],
+                //           ),
+                //           Text(
+                //             'Do chapter 2 to 5 for next week',
+                //             style:
+                //                 Styles.textStyle16.copyWith(color: Colors.grey),
+                //           )
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
             SizedBox(
@@ -315,7 +372,7 @@ class EditTaskView extends StatelessWidget {
             TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: Color(0xff8687E7),
-                fixedSize: Size(MediaQuery.of(context).size.width * .8, 48),
+                fixedSize: Size(320.w, 48.h),
               ),
               onPressed: () {
                 GoRouter.of(context).pop();

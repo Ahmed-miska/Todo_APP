@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:todo/core/ulits/styles.dart';
 import 'package:todo/features/home/presentation/views/choose_time_view.dart';
+import 'package:todo/features/home/presentation/views/widgets/profile_view/category_items.dart';
 
 class DatePicker extends StatefulWidget {
   const DatePicker({Key? key}) : super(key: key);
@@ -16,41 +18,46 @@ class _DatePickerState extends State<DatePicker> {
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       toDay = day;
+      dateItem.day = toDay.toString();
     });
   }
 
-  Future openTimeDialog() => showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          contentPadding: EdgeInsets.zero,
-          content: Container(
-            height: MediaQuery.of(context).size.height * .29,
-            width: MediaQuery.of(context).size.width,
-            child: TimeView(),
-          ),
+  TimeItem timeItem = TimeItem();
+  DateItem dateItem = DateItem();
+  Future openTimeDialog() async {
+    timeItem = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        contentPadding: EdgeInsets.zero,
+        content: Container(
+          height: 220.h,
+          width: 320.w,
+          child: TimeView(),
         ),
-      );
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           tableCalenderFormat(),
+          Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextButton(
                 style: TextButton.styleFrom(
-                  fixedSize: Size(MediaQuery.of(context).size.width * .3, 48),
+                  fixedSize: Size(105.w, 35.h),
                 ),
                 onPressed: () {
                   GoRouter.of(context).pop();
                 },
                 child: Text(
                   'Cancel',
-                  style: Styles.textStyle16.copyWith(
+                  style: Styles.textStyle12.copyWith(
                     color: Color(0xff8687E7),
                   ),
                 ),
@@ -58,22 +65,23 @@ class _DatePickerState extends State<DatePicker> {
               TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Color(0xff8687E7),
-                  fixedSize: Size(MediaQuery.of(context).size.width * .3, 48),
+                  fixedSize: Size(107.w, 35.h),
                 ),
                 onPressed: () async {
-                  print(toDay);
-                  GoRouter.of(context).pop();
+                  Navigator.pop(context, dateItem);
                   await openTimeDialog();
+                  dateItem.timeItem = timeItem;
                 },
                 child: Text(
                   'Choose Time',
-                  style: Styles.textStyle16.copyWith(
+                  style: Styles.textStyle12.copyWith(
                     color: Colors.white,
                   ),
                 ),
               ),
             ],
-          )
+          ),
+          Spacer()
         ],
       ),
     );
@@ -81,29 +89,29 @@ class _DatePickerState extends State<DatePicker> {
 
   Container tableCalenderFormat() {
     return Container(
-          height: 300,
-          child: TableCalendar(
-            shouldFillViewport: true,
-            weekendDays: [],
-            daysOfWeekStyle: DaysOfWeekStyle(
-              weekdayStyle:
-                  TextStyle(fontSize: 10, fontWeight: FontWeight.w700),
-            ),
-            daysOfWeekHeight: 15,
-            locale: "en_US",
-            focusedDay: toDay,
-            firstDay: DateTime.utc(2010, 3, 5),
-            lastDay: DateTime(2040, 3, 5),
-            rowHeight: 43,
-            headerStyle: HeaderStyle(
-                formatButtonVisible: false,
-                titleCentered: true,
-                formatButtonShowsNext: false,
-                decoration: BoxDecoration()),
-            selectedDayPredicate: (day) => isSameDay(day, toDay),
-            availableGestures: AvailableGestures.all,
-            onDaySelected: _onDaySelected,
-          ),
-        );
+      height: 250.h,
+      width: 220.w,
+      child: TableCalendar(
+        shouldFillViewport: true,
+        weekendDays: [],
+        daysOfWeekStyle: DaysOfWeekStyle(
+          weekdayStyle: TextStyle(fontSize: 6.sp, fontWeight: FontWeight.w700),
+        ),
+        daysOfWeekHeight: 15,
+        locale: "en_US",
+        focusedDay: toDay,
+        firstDay: DateTime.utc(2010, 3, 5),
+        lastDay: DateTime(2040, 3, 5),
+        rowHeight: 43,
+        headerStyle: HeaderStyle(
+            formatButtonVisible: false,
+            titleCentered: true,
+            formatButtonShowsNext: false,
+            decoration: BoxDecoration()),
+        selectedDayPredicate: (day) => isSameDay(day, toDay),
+        availableGestures: AvailableGestures.all,
+        onDaySelected: _onDaySelected,
+      ),
+    );
   }
 }

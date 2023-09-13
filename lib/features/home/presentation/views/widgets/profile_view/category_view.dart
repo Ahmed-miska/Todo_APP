@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo/features/home/presentation/views/widgets/profile_view/category_items.dart';
 
 import '../../../../../../core/ulits/styles.dart';
 
@@ -12,6 +12,10 @@ class CategoryView extends StatefulWidget {
 }
 
 class _CategoryViewState extends State<CategoryView> {
+  String text = '';
+  Color color = Colors.black;
+  Icon icon = Icon(Icons.abc);
+  CategoryItems categoryItems = CategoryItems();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,34 +31,35 @@ class _CategoryViewState extends State<CategoryView> {
               thickness: 2,
             ),
             SizedBox(
-              height: 8,
+              height: 8.h,
             ),
             Container(
-              height: MediaQuery.of(context).size.height * .45,
-              width: MediaQuery.of(context).size.width * .7,
+              height: 400.h,
+              width: 280.w,
               child: ListView.builder(
                 itemCount: 1,
                 itemBuilder: (BuildContext context, int index) {
                   return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          zZ(
+                          categoryItem(
                               color: Color(0xffCCFF80),
                               icon: Icon(
                                 Icons.food_bank,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'Grocery'),
-                          zZ(
+                          categoryItem(
                               color: Color(0xffFF9680),
                               icon: Icon(
                                 Icons.business_center_outlined,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'Work'),
-                          zZ(
+                          categoryItem(
                               color: Color(0xff80FFFF),
                               icon: Icon(
                                 Icons.fitness_center_outlined,
@@ -64,26 +69,26 @@ class _CategoryViewState extends State<CategoryView> {
                         ],
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 40.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          zZ(
+                          categoryItem(
                               color: Color(0xff80FFD9),
                               icon: Icon(
                                 Icons.design_services_outlined,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'Design'),
-                          zZ(
+                          categoryItem(
                               color: Color(0xff809CFF),
                               icon: Icon(
                                 Icons.school_outlined,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'University'),
-                          zZ(
+                          categoryItem(
                               color: Color(0xffFF80EB),
                               icon: Icon(
                                 Icons.phone_android_outlined,
@@ -93,26 +98,26 @@ class _CategoryViewState extends State<CategoryView> {
                         ],
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 40.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          zZ(
+                          categoryItem(
                               color: Color(0xffFC80FF),
                               icon: Icon(
                                 Icons.music_note_outlined,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'Music'),
-                          zZ(
+                          categoryItem(
                               color: Color(0xff80FFA3),
                               icon: Icon(
                                 Icons.heart_broken_outlined,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'Health'),
-                          zZ(
+                          categoryItem(
                               color: Color(0xff80D1FF),
                               icon: Icon(
                                 Icons.movie_creation_outlined,
@@ -126,9 +131,10 @@ class _CategoryViewState extends State<CategoryView> {
                 },
               ),
             ),
+            Spacer(),
             TextButton(
               onPressed: () {
-                GoRouter.of(context).pop();
+                Navigator.pop(context, categoryItems);
               },
               child: Text(
                 'Add Category',
@@ -136,26 +142,37 @@ class _CategoryViewState extends State<CategoryView> {
               ),
               style: TextButton.styleFrom(
                 backgroundColor: Color(0xff8687E7),
-                fixedSize: Size(MediaQuery.of(context).size.width * .8, 48),
+                fixedSize: Size(250.w, 48.h),
               ),
-            )
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
           ],
         ),
       ),
     );
   }
 
-  GestureDetector zZ(
-      {required Color color, required Icon icon, required String text}) {
+  GestureDetector categoryItem({
+    required Color color,
+    required Icon icon,
+    required String text,
+  }) {
     return GestureDetector(
       onTap: () {
-        setState(() {});
+        setState(() {
+          categoryItems.text = text;
+          categoryItems.color = color;
+          categoryItems.icon = icon;
+        });
       },
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            height: 64,
-            width: 64,
+            height: 55.h,
+            width: 45.w,
             decoration: BoxDecoration(
               color: color,
               borderRadius: BorderRadius.circular(6),
@@ -167,7 +184,7 @@ class _CategoryViewState extends State<CategoryView> {
           ),
           Text(
             text,
-            style: Styles.textStyle16,
+            style: Styles.textStyle12,
           )
         ],
       ),

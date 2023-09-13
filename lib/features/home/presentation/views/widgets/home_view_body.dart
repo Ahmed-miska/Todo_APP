@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo/core/ulits/styles.dart';
 import 'package:todo/features/home/presentation/views/widgets/todo_item.dart';
 
@@ -13,14 +14,13 @@ class HomeViewBody extends StatefulWidget {
 class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   Widget build(BuildContext context) {
-    double h = MediaQuery.of(context).size.height;
     return Column(
       children: [
         SizedBox(
-          height: 66,
+          height: 40.h,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: EdgeInsets.symmetric(horizontal: 30.r),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -34,18 +34,19 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           ),
         ),
         SizedBox(
-          height: h * .01,
+          height: 10.h,
         ),
         Container(
-          height: MediaQuery.of(context).size.height * .72,
+          height: 641.h,
+          width: 327.w,
           child: ListView.builder(
-            itemCount: 3,
+            itemCount: 30,
             itemBuilder: (BuildContext context, int index) {
               return Column(
                 children: [
                   TodoItem(),
                   SizedBox(
-                    height: 20,
+                    height: 16.h,
                   )
                 ],
               );

@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/features/splash/presentation/views/widgets/custom_splash_down_bar.dart';
 
 import '../../../../../core/ulits/app_router.dart';
-import 'custom_Next_botton.dart';
-import 'custom_back_botton.dart';
 import 'custom_skip_botton.dart';
 import 'custom_splash_view.dart';
 
@@ -21,7 +20,7 @@ class SplashViewBody2 extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 58,
+              height: 58.h,
             ),
             CustomSkipBotton(),
             CustomSplashView(
@@ -35,14 +34,14 @@ class SplashViewBody2 extends StatelessWidget {
             ),
             Spacer(),
             CustomSplashDownBar(
-              width: 90,
+              width: 90.w,
               text: 'NEXT',
               onpressed: () {
                 GoRouter.of(context).push(AppRouter.kSplashViewBody3);
               },
             ),
             SizedBox(
-              height: 60,
+              height: 60.h,
             )
           ],
         ),

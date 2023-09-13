@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/core/ulits/styles.dart';
 
+// ignore: must_be_immutable
 class CustomUserNameTextField extends StatelessWidget {
-  const CustomUserNameTextField({
+  CustomUserNameTextField({
+   required this.controller,
     Key? key,
   }) : super(key: key);
-
+  TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      controller: controller,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
@@ -22,7 +26,7 @@ class CustomUserNameTextField extends StatelessWidget {
           ),
         ),
         hintText: 'Enter your Username',
-        hintStyle: TextStyle(
+        hintStyle: Styles.textStyle16.copyWith(
           color: Color(0xFF4B4747),
         ),
       ),

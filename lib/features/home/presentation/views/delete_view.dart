@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/ulits/styles.dart';
@@ -13,7 +14,7 @@ class DeleteView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0.sp),
         child: Column(
           children: [
             Text(
@@ -27,26 +28,26 @@ class DeleteView extends StatelessWidget {
               children: [
                 Text(
                   'Are You sure you want to delete this task?',
-                  style: Styles.textStyle16,
+                  style: Styles.textStyle14,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 15.h,
                 ),
                 Text(
                   'Task title : Do math homework',
-                  style: Styles.textStyle18,
+                  style: Styles.textStyle16,
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
-            SizedBox(
-              height: 20,
-            ),
+            Spacer(),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 TextButton(
                   style: TextButton.styleFrom(
-                    fixedSize: Size(MediaQuery.of(context).size.width * .3, 48),
+                    fixedSize: Size(107.w, 35.h),
                   ),
                   onPressed: () {
                     GoRouter.of(context).pop();
@@ -61,7 +62,7 @@ class DeleteView extends StatelessWidget {
                 TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor: Color(0xff8687E7),
-                    fixedSize: Size(MediaQuery.of(context).size.width * .3, 48),
+                    fixedSize: Size(107.w, 35.h),
                   ),
                   onPressed: () async {
                     GoRouter.of(context).pop();
@@ -72,6 +73,9 @@ class DeleteView extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 10.h,
                 ),
               ],
             ),

@@ -2,8 +2,10 @@ import 'package:go_router/go_router.dart';
 import 'package:todo/features/Login/presentation/views/login_view.dart';
 import 'package:todo/features/home/presentation/views/edit_task_view.dart';
 import 'package:todo/features/home/presentation/views/home_view.dart';
+
 import 'package:todo/features/home/presentation/views/widgets/profile_view/setting_view.dart';
 import 'package:todo/features/register/presentation/views/register_view.dart';
+import 'package:todo/features/register/presentation/views/widgets/register_with_phone.dart';
 import 'package:todo/features/splash/presentation/views/splash_view.dart';
 import 'package:todo/features/splash/presentation/views/widgets/splash_view_body2.dart';
 import 'package:todo/features/splash/presentation/views/widgets/splash_view_body3.dart';
@@ -21,6 +23,7 @@ abstract class AppRouter {
   static final kHomeView = '/HomeView';
   static final kEditTaskView = '/EditTaskView';
   static final kSettingView = '/SettingView';
+  static final kPhoneView = '/PhoneLogin';
 
   static final router = GoRouter(
     routes: [
@@ -64,6 +67,11 @@ abstract class AppRouter {
         path: kSettingView,
         builder: (context, state) => SettingView(),
       ),
+      GoRoute(
+        path: kPhoneView,
+        builder: (context, state) => PhoneLogin(),
+      ),
+      
     ],
   );
 }

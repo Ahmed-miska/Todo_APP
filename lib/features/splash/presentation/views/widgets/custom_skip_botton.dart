@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo/core/ulits/app_router.dart';
 
 import '../../../../../core/ulits/styles.dart';
 
@@ -14,6 +16,9 @@ class CustomSkipBotton extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
+          onTap: () {
+            GoRouter.of(context).push(AppRouter.kLoginView);
+          },
           child: Text(
             'SKIP',
             style: Styles.textStyle16.copyWith(

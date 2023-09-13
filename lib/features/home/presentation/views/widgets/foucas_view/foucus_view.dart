@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:todo/core/ulits/styles.dart';
 
@@ -59,6 +60,7 @@ class _FoucusViewState extends State<FoucusView> {
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'Focus Mode',
@@ -66,7 +68,7 @@ class _FoucusViewState extends State<FoucusView> {
             ),
             SleekCircularSlider(
                 appearance: CircularSliderAppearance(
-                  size: MediaQuery.of(context).size.width * 0.7,
+                  size: 250.w,
                   customColors: CustomSliderColors(
                     trackColor: Colors.white38,
                     progressBarColor: Color(0xff8687E7),
@@ -76,9 +78,9 @@ class _FoucusViewState extends State<FoucusView> {
                   startAngle: 270,
                   angleRange: 360,
                   customWidths: CustomSliderWidths(
-                    trackWidth: 15,
-                    progressBarWidth: 15,
-                    handlerSize: 5,
+                    trackWidth: 15.w,
+                    progressBarWidth: 15.w,
+                    handlerSize: 5.w,
                   ),
                 ),
                 min: 0,
@@ -108,7 +110,7 @@ class _FoucusViewState extends State<FoucusView> {
                               ),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 10.h,
                             ),
                             Text(
                               'Minute',

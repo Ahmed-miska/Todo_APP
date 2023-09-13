@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomPasswordTextField extends StatefulWidget {
-  const CustomPasswordTextField({Key? key}) : super(key: key);
-
+  CustomPasswordTextField({Key? key, required this.controller})
+      : super(key: key);
+  TextEditingController controller;
   @override
   State<CustomPasswordTextField> createState() =>
       _CustomPasswordTextFieldState();
@@ -19,11 +21,12 @@ class _CustomPasswordTextFieldState extends State<CustomPasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       obscureText: passwordVisible,
       validator: (value) {
         if (value!.isEmpty) {
           return 'Password incorrect';
-        }
+        } else {}
       },
       decoration: InputDecoration(
         suffixIcon: IconButton(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/ulits/app_router.dart';
@@ -18,7 +19,7 @@ class SplashViewBody4 extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 58,
+              height: 58.h,
             ),
             CustomSkipBotton(),
             CustomSplashView(
@@ -32,14 +33,14 @@ class SplashViewBody4 extends StatelessWidget {
             ),
             Spacer(),
             CustomSplashDownBar(
-              width: 120,
+              width: 120.w,
               text: 'Get Started',
               onpressed: () {
                 GoRouter.of(context).push(AppRouter.kSplashViewBody5);
               },
             ),
             SizedBox(
-              height: 60,
+              height: 60.h,
             )
           ],
         ),

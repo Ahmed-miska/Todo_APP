@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo/core/ulits/styles.dart';
 import 'package:todo/features/home/presentation/views/widgets/calendar_view/calender_view.dart';
 import 'package:todo/features/home/presentation/views/widgets/foucas_view/foucus_view.dart';
@@ -54,7 +55,7 @@ class _HomeViewState extends State<HomeView> {
         shape: CircularNotchedRectangle(),
         notchMargin: 10,
         child: Container(
-          height: 80,
+          height: 70.h,
           color: Color(0xff363636),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,7 +69,7 @@ class _HomeViewState extends State<HomeView> {
                         currentTab = 0;
                       });
                     },
-                    minWidth: 40,
+                    minWidth: 40.h,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -92,7 +93,7 @@ class _HomeViewState extends State<HomeView> {
                         currentTab = 1;
                       });
                     },
-                    minWidth: 40,
+                    minWidth: 40.h,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -120,7 +121,7 @@ class _HomeViewState extends State<HomeView> {
                         currentTab = 2;
                       });
                     },
-                    minWidth: 40,
+                    minWidth: 40.h,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -144,7 +145,7 @@ class _HomeViewState extends State<HomeView> {
                         currentTab = 3;
                       });
                     },
-                    minWidth: 40,
+                    minWidth: 40.h,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
