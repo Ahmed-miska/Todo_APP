@@ -12,9 +12,6 @@ class CategoryView extends StatefulWidget {
 }
 
 class _CategoryViewState extends State<CategoryView> {
-  String text = '';
-  Color color = Colors.black;
-  Icon icon = Icon(Icons.abc);
   CategoryItems categoryItems = CategoryItems();
   @override
   Widget build(BuildContext context) {
@@ -46,21 +43,27 @@ class _CategoryViewState extends State<CategoryView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           categoryItem(
-                              color: Color(0xffCCFF80),
+                              color: categoryItems.text == 'Grocery'
+                                  ? Colors.grey
+                                  : Color(0xffCCFF80),
                               icon: Icon(
                                 Icons.food_bank,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'Grocery'),
                           categoryItem(
-                              color: Color(0xffFF9680),
+                              color: categoryItems.text == 'Work'
+                                  ? Colors.grey
+                                  : Color(0xffFF9680),
                               icon: Icon(
                                 Icons.business_center_outlined,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'Work'),
                           categoryItem(
-                              color: Color(0xff80FFFF),
+                              color: categoryItems.text == 'Sport'
+                                  ? Colors.grey
+                                  : Color(0xff80FFFF),
                               icon: Icon(
                                 Icons.fitness_center_outlined,
                                 color: Colors.black.withOpacity(.3),
@@ -75,21 +78,27 @@ class _CategoryViewState extends State<CategoryView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           categoryItem(
-                              color: Color(0xff80FFD9),
+                              color: categoryItems.text == 'Design'
+                                  ? Colors.grey
+                                  : Color(0xff80FFD9),
                               icon: Icon(
                                 Icons.design_services_outlined,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'Design'),
                           categoryItem(
-                              color: Color(0xff809CFF),
+                              color: categoryItems.text == 'University'
+                                  ? Colors.grey
+                                  : Color(0xff809CFF),
                               icon: Icon(
                                 Icons.school_outlined,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'University'),
                           categoryItem(
-                              color: Color(0xffFF80EB),
+                              color: categoryItems.text == 'Social'
+                                  ? Colors.grey
+                                  : Color(0xffFF80EB),
                               icon: Icon(
                                 Icons.phone_android_outlined,
                                 color: Colors.black.withOpacity(.3),
@@ -104,21 +113,27 @@ class _CategoryViewState extends State<CategoryView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           categoryItem(
-                              color: Color(0xffFC80FF),
+                              color: categoryItems.text == 'Music'
+                                  ? Colors.grey
+                                  : Color(0xffFC80FF),
                               icon: Icon(
                                 Icons.music_note_outlined,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'Music'),
                           categoryItem(
-                              color: Color(0xff80FFA3),
+                              color: categoryItems.text == 'Health'
+                                  ? Colors.grey
+                                  : Color(0xff80FFA3),
                               icon: Icon(
                                 Icons.heart_broken_outlined,
                                 color: Colors.black.withOpacity(.3),
                               ),
                               text: 'Health'),
                           categoryItem(
-                              color: Color(0xff80D1FF),
+                              color: categoryItems.text == 'Movie'
+                                  ? Colors.grey
+                                  : Color(0xff80D1FF),
                               icon: Icon(
                                 Icons.movie_creation_outlined,
                                 color: Colors.black.withOpacity(.3),
@@ -134,6 +149,9 @@ class _CategoryViewState extends State<CategoryView> {
             Spacer(),
             TextButton(
               onPressed: () {
+                print(categoryItems.color);
+                print(categoryItems.text);
+                print(categoryItems.icon);
                 Navigator.pop(context, categoryItems);
               },
               child: Text(

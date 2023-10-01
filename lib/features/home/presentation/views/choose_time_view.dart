@@ -66,7 +66,7 @@ class _TimeViewState extends State<TimeView> {
                       onChanged: (int value) {
                         setState(() {
                           hour = value;
-                          timeItem.hour = value;
+                          timeItem.hour = value.toString();
                         });
                       },
                       decoration: BoxDecoration(),
@@ -101,7 +101,7 @@ class _TimeViewState extends State<TimeView> {
                       onChanged: (int value) {
                         setState(() {
                           minute = value;
-                          timeItem.minute = value;
+                          timeItem.minute = value.toString();
                         });
                       },
                       decoration: BoxDecoration(),
@@ -186,6 +186,7 @@ class _TimeViewState extends State<TimeView> {
                       // print(timeItem.minute);
                       // print(timeItem.m);
                       Navigator.pop(context, timeItem);
+                      setState(() {});
                     },
                     child: Text(
                       'Save',

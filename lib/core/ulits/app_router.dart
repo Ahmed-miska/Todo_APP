@@ -59,10 +59,10 @@ abstract class AppRouter {
         path: kHomeView,
         builder: (context, state) => HomeView(),
       ),
-      GoRoute(
-        path: kEditTaskView,
-        builder: (context, state) => EditTaskView(),
-      ),
+      // GoRoute(
+      //   path: kEditTaskView,
+      //   builder: (context, state) => EditTaskView(),
+      // ),
       GoRoute(
         path: kSettingView,
         builder: (context, state) => SettingView(),
@@ -71,7 +71,6 @@ abstract class AppRouter {
         path: kPhoneView,
         builder: (context, state) => PhoneLogin(),
       ),
-      
     ],
   );
 }

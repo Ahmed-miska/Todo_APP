@@ -4,19 +4,17 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/ulits/styles.dart';
 
 class CustomTextField extends StatelessWidget {
-   CustomTextField({
-    super.key,
-    required this.text,
-    this.controller
-  });
-  final String text;
+  CustomTextField(
+      {super.key, required this.text, this.controller, this.min, this.max});
+  String text;
+  int? min = 1, max = 5;
   TextEditingController? controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      minLines: 1,
-      maxLines: 5,
+      minLines: min,
+      maxLines: max,
       decoration: InputDecoration(
         hintText: text,
         hintStyle: Styles.textStyle18,

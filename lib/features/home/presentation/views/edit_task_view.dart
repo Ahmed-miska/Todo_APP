@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo/features/home/presentation/views/widgets/edit_Task_title.dart';
+import 'package:todo/features/home/presentation/views/widgets/profile_view/category_items.dart';
 import 'package:todo/features/home/presentation/views/widgets/profile_view/category_view.dart';
 import 'package:todo/features/home/presentation/views/widgets/profile_view/priority_view.dart';
 
@@ -10,56 +11,125 @@ import '../../../../core/ulits/styles.dart';
 import 'date_view.dart';
 import 'delete_view.dart';
 
-class EditTaskView extends StatelessWidget {
-  const EditTaskView({Key? key}) : super(key: key);
+class EditTaskView extends StatefulWidget {
+  EditTaskView({Key? key, required this.document, required this.id})
+      : super(key: key);
+  final Map<String, dynamic> document;
+  final String id;
+  @override
+  State<EditTaskView> createState() => _EditTaskViewState();
+}
+
+class _EditTaskViewState extends State<EditTaskView> {
+  TextEditingController? titleCont;
+  TextEditingController? discCont;
+  String? time;
+  IconData? myIcon;
+  String? iconString;
+  String? catText;
+  String? prNumb;
+  String? catcolor;
+  String? day;
+  String? hour;
+  String? minute;
+  String? m;
+
+  Color? otherColor;
+  EditTitle editTitle = EditTitle();
+  DateItem dateItem = DateItem();
+  TimeItem timeItem = TimeItem();
+  int? prrnum;
+  CategoryItems categoryItems = CategoryItems();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dateItem.day = widget.document['timeDay'].toString();
+
+    timeItem.hour = widget.document['timeHour'].toString();
+    timeItem.minute = widget.document['timeMinute'].toString();
+    timeItem.m = widget.document['timeM'].toString();
+    dateItem.timeItem = timeItem;
+    editTitle.titcont = TextEditingController(text: widget.document['title']);
+    editTitle.discont =
+        TextEditingController(text: widget.document['description']);
+    day = widget.document['timeDay'].substring(5, 10);
+    hour = widget.document['timeHour'].toString();
+    minute = widget.document['timeMinute'].toString();
+    m = widget.document['timeM'].toString();
+    time = (day! + ' At ' + hour! + ':' + minute! + m!).toString();
+
+    iconString = widget.document['categoryIcon'].toString();
+    rIcon();
+    catcolor = widget.document['categoryColor'].toString();
+    rColor();
+    catText = widget.document['categoryText'].toString();
+
+    prNumb = widget.document['priorty'].toString();
+  }
 
   @override
   Widget build(BuildContext context) {
-    
-    Future openEditTaskView() => showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            contentPadding: EdgeInsets.zero,
-            content: Container(
-              height: MediaQuery.of(context).size.height * .31,
-              width: MediaQuery.of(context).size.width,
-              child: EditTaskTitel(),
+    Future openEditTaskView() async {
+      editTitle = await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height * .31,
+                minWidth: MediaQuery.of(context).size.width,
+                maxHeight: MediaQuery.of(context).size.height * .45),
+            child: EditTaskTitel(
+              disc: editTitle.discont.text,
+              title: editTitle.titcont.text,
             ),
           ),
-        );
-    Future openDateDialog() => showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            contentPadding: EdgeInsets.zero,
-            content: Container(
-              height: 340.h,
-              width: 230.w,
-              child: DatePicker(),
-            ),
+        ),
+      );
+    }
+
+    Future openDateDialog() async {
+      dateItem = await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            height: 340.h,
+            width: 230.w,
+            child: DatePicker(),
           ),
-        );
-    Future openPriorityView() => showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            contentPadding: EdgeInsets.zero,
-            content: Container(
-              height: 360.h,
-              width: 250.w,
-              child: PriorityView(),
-            ),
+        ),
+      );
+    }
+
+    Future openPriorityView() async {
+      prrnum = await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            height: 360.h,
+            width: 250.w,
+            child: PriorityView(),
           ),
-        );
-    Future openCategoryView() => showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            contentPadding: EdgeInsets.zero,
-            content: Container(
-              height: 556.h,
-              width: 300.w,
-              child: CategoryView(),
-            ),
+        ),
+      );
+    }
+
+    Future openCategoryView() async {
+      categoryItems = await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            height: 556.h,
+            width: 300.w,
+            child: CategoryView(),
           ),
-        );
+        ),
+      );
+    }
 
     Future openDeleteView() => showDialog(
           context: context,
@@ -113,9 +183,15 @@ class EditTaskView extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Do Math Homework',
-                                style: Styles.textStyle16,
+                              Container(
+                                constraints: BoxConstraints(
+                                    maxWidth: 150.w, minWidth: 150.w),
+                                child: Text(
+                                  editTitle.titcont.text,
+                                  style: Styles.textStyle16,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                               SizedBox(
                                 width: 100.w,
@@ -133,10 +209,15 @@ class EditTaskView extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Today At 16:45',
-                                  style: Styles.textStyle16
-                                      .copyWith(color: Colors.grey),
+                                Container(
+                                  constraints: BoxConstraints(maxWidth: 250.w),
+                                  child: Text(
+                                    editTitle.discont.text,
+                                    style: Styles.textStyle16
+                                        .copyWith(color: Colors.grey),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ],
                             ),
@@ -146,50 +227,6 @@ class EditTaskView extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Container(
-                //   height: 80,
-                //   width: MediaQuery.of(context).size.width * .9,
-                //   child: Row(
-                //     children: [
-                //       Icon(
-                //         Icons.circle_outlined,
-                //         size: 20,
-                //       ),
-                //       SizedBox(
-                //         width: 10,
-                //       ),
-                //       Column(
-                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //         crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: [
-                //           Row(
-                //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //             children: [
-                //               Text(
-                //                 'Do Math Homework',
-                //                 style: Styles.textStyle20,
-                //               ),
-                //               SizedBox(
-                //                 width: MediaQuery.of(context).size.width * .17,
-                //               ),
-                //               IconButton(
-                //                 onPressed: () async {
-                //                   await openEditTaskView();
-                //                 },
-                //                 icon: Icon(Icons.edit_note),
-                //               ),
-                //             ],
-                //           ),
-                //           Text(
-                //             'Do chapter 2 to 5 for next week',
-                //             style:
-                //                 Styles.textStyle16.copyWith(color: Colors.grey),
-                //           )
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ],
             ),
             SizedBox(
@@ -212,6 +249,13 @@ class EditTaskView extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     await openDateDialog();
+                    setState(() {
+                      day = dateItem.day!.substring(5, 10);
+                      hour = dateItem.timeItem!.hour.toString();
+                      minute = dateItem.timeItem!.minute.toString();
+                      m = dateItem.timeItem!.m.toString();
+                    });
+                    setState(() {});
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -221,7 +265,13 @@ class EditTaskView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(12),
                       child: Text(
-                        'Today At 16:45',
+                        (day! + ' At ' + hour! + ':' + minute! + m!).toString(),
+                        // day!.toString() +
+                        //     ' At ' +
+                        //     hour!.toString() +
+                        //     ':' +
+                        //     minute!.toString() +
+                        //     m!.toString(),
                         style: Styles.textStyle12.copyWith(color: Colors.white),
                       ),
                     ),
@@ -249,6 +299,10 @@ class EditTaskView extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     await openCategoryView();
+                    setState(() {
+                      catText = categoryItems.text;
+                      myIcon = categoryItems.icon.icon;
+                    });
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -259,12 +313,16 @@ class EditTaskView extends StatelessWidget {
                       padding: const EdgeInsets.all(12),
                       child: Row(
                         children: [
-                          Icon(Icons.school_outlined),
+                          Icon(
+                            // Icons.abc,
+                            myIcon,
+                            color: Colors.white,
+                          ),
                           SizedBox(
                             width: 5,
                           ),
                           Text(
-                            'University',
+                            catText!,
                             style: Styles.textStyle12
                                 .copyWith(color: Colors.white),
                           ),
@@ -295,6 +353,9 @@ class EditTaskView extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     await openPriorityView();
+                    setState(() {
+                      prNumb = prrnum.toString();
+                    });
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -304,7 +365,7 @@ class EditTaskView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(12),
                       child: Text(
-                        'Default',
+                        prNumb!,
                         style: Styles.textStyle12.copyWith(color: Colors.white),
                       ),
                     ),
@@ -375,6 +436,21 @@ class EditTaskView extends StatelessWidget {
                 fixedSize: Size(320.w, 48.h),
               ),
               onPressed: () {
+                FirebaseFirestore.instance
+                    .collection('Todo')
+                    .doc(widget.id)
+                    .update({
+                  'title': editTitle.titcont.text,
+                  'description': editTitle.discont.text,
+                  'timeDay': dateItem.day.toString(),
+                  'timeHour': hour,
+                  'timeMinute': minute,
+                  'timeM': m,
+                  'priorty': prNumb,
+                  'categoryText': catText,
+                  'categoryColor': categoryItems.color.toString(),
+                  'categoryIcon': Icon(myIcon).toString(),
+                });
                 GoRouter.of(context).pop();
               },
               child: Text(
@@ -386,5 +462,18 @@ class EditTaskView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void rIcon() {
+    int iconCodePoint = int.parse(iconString!.substring(16, 21), radix: 16);
+    myIcon = IconData(iconCodePoint, fontFamily: 'MaterialIcons');
+  }
+
+  void rColor() {
+    // Color(0x12345678)
+    String valueString =
+        catcolor!.split('(0x')[1].split(')')[0]; // kind of hacky..
+    int value = int.parse(valueString, radix: 16);
+    otherColor = new Color(value);
   }
 }

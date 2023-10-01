@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todo/features/home/presentation/views/widgets/profile_view/category_items.dart';
 import 'package:todo/features/home/presentation/views/widgets/profile_view/category_view.dart';
 import 'package:todo/features/home/presentation/views/widgets/profile_view/priority_view.dart';
@@ -19,11 +20,10 @@ class CustomBottomSheet extends StatefulWidget {
 }
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
-  int result = 0;
+  int result = 1;
   CategoryItems categoryItems = CategoryItems();
   DateItem dateItem = DateItem();
   TimeItem timeItem = TimeItem();
-  String time = '';
   Future openDateDialog() async {
     dateItem = await showDialog(
       context: context,
@@ -68,8 +68,23 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
 
   TextEditingController titleCont = TextEditingController();
   TextEditingController discCont = TextEditingController();
+
+  
+
   @override
   Widget build(BuildContext context) {
+    
+    if (categoryItems.color == null) {
+      categoryItems.color = Color(0xffCCFF80);
+    }
+    if (categoryItems.icon == null) {
+      categoryItems.icon = Icon(Icons.food_bank);
+    }
+    if (categoryItems.text == null) {
+      categoryItems.text == 'Grocery';
+    }
+
+    dateItem.day = DateTime.now().toString();
     double h = MediaQuery.of(context).size.height;
     return Padding(
       padding: EdgeInsets.only(
@@ -128,21 +143,24 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                 Spacer(),
                 IconButton(
                   onPressed: () {
-                    FirebaseFirestore.instance.collection('Todo').add({
-                      'title': titleCont.text,
-                      'description': discCont.text,
-                      'timeDay': dateItem.day.toString(),
-                      'timeHour': dateItem.timeItem!.hour.toString(),
-                      'timeMinute': dateItem.timeItem!.minute.toString(),
-                      'timeM': dateItem.timeItem!.m.toString(),
-                      'priorty': result,
-                      'categoryText': categoryItems.text,
-                      'categoryColor': categoryItems.color.toString(),
-                      'categoryIcon': categoryItems.icon.toString(),
-                    });
-                    titleCont.clear();
-                    discCont.clear();
+                    if (titleCont.text.isEmpty) {
+                    } else {
+                      FirebaseFirestore.instance.collection('Todo').add({
+                        'title': titleCont.text,
+                        'description': discCont.text,
+                        'timeDay': dateItem.day.toString(),
+                        'timeHour': dateItem.timeItem!.hour.toString(),
+                        'timeMinute': dateItem.timeItem!.minute.toString(),
+                        'timeM': dateItem.timeItem!.m.toString(),
+                        'priorty': result.toString(),
+                        'categoryText': categoryItems.text.toString(),
+                        'categoryColor': categoryItems.color.toString(),
+                        'categoryIcon': categoryItems.icon.toString(),
+                      });
+                    }
                     
+                    initState();
+                    GoRouter.of(context).pop();
                   },
                   icon: Icon(Icons.send_outlined),
                   color: Color(0xff8687E7),

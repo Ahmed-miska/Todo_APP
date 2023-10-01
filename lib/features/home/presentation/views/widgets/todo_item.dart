@@ -1,19 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:todo/core/ulits/app_router.dart';
+
 import 'package:todo/core/ulits/styles.dart';
 
-class TodoItem extends StatelessWidget {
-  const TodoItem({Key? key}) : super(key: key);
+class TodoItem extends StatefulWidget {
+  TodoItem(
+      {Key? key,
+      this.onTap,
+      required this.title,
+      required this.desc,
+      required this.prNum,
+      required this.catColor,
+      required this.catIcon,
+      required this.catText,
+      required this.time})
+      : super(key: key);
+  String title;
+  String desc;
+  Color catColor;
+  String catText;
+  Icon catIcon;
+  String prNum;
+  String time;
+  void Function()? onTap;
+  @override
+  State<TodoItem> createState() => _TodoItemState();
+}
 
+class _TodoItemState extends State<TodoItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        GoRouter.of(context).push(AppRouter.kEditTaskView);
-      },
+      onTap: widget.onTap,
       child: Container(
         height: 72.h,
         width: 327.w,
@@ -37,9 +56,14 @@ class TodoItem extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                      'Do Math Homework',
-                      style: Styles.textStyle16,
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 100.w),
+                      child: Text(
+                        widget.title,
+                        style: Styles.textStyle16,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
                     ),
                     SizedBox(
                       width: 140.h,
@@ -52,14 +76,14 @@ class TodoItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Today At 16:45',
+                        widget.time,
                         style: Styles.textStyle16.copyWith(color: Colors.grey),
                       ),
                       Row(
                         children: [
                           Container(
                             decoration: BoxDecoration(
-                                color: Color(0xff809CFF),
+                                color: widget.catColor,
                                 borderRadius: BorderRadius.circular(6.r)),
                             child: Padding(
                               padding: EdgeInsets.all(5.r),
@@ -67,11 +91,14 @@ class TodoItem extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.school_outlined),
+                                  widget.catIcon,
                                   SizedBox(
                                     width: 5.w,
                                   ),
-                                  Text('University'),
+                                  Text(
+                                    widget.catText,
+                                    style: TextStyle(color: Colors.black54),
+                                  ),
                                 ],
                               ),
                             ),
@@ -91,7 +118,7 @@ class TodoItem extends StatelessWidget {
                               child: Row(
                                 children: [
                                   Icon(Icons.flag_outlined),
-                                  Text('1'),
+                                  Text(widget.prNum),
                                 ],
                               ),
                             ),
